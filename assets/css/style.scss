@@ -18,6 +18,7 @@ $customFont: {{ if $.Site.Params.GoogleFontFamily }}'{{ $.Site.Params.GoogleFont
 @import "post";
 @import "pagination";
 @import "footer";
+@import "theme-switcher";
 @import "banner";
 
 @import "prism";
