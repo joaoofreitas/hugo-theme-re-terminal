@@ -101,23 +101,57 @@
       // Update accent color
       root.style.setProperty('--accent', themeConfig.accent);
       
-      // Update background if specified (for darkpaper theme)
-      if (themeConfig.background) {
+      // Handle specific theme configurations
+      if (theme === 'darkpaper') {
+        // Dark theme with custom background
         root.style.setProperty('--background', themeConfig.background);
+        root.style.setProperty('--color', 'white');
+        root.style.setProperty('--border-color', 'rgba(255, 255, 255, 0.1)');
+        root.style.setProperty('--accent-contrast-color', 'black');
+        root.style.setProperty('--menu-color', 'white');
+        
+        // Dark theme syntax colors
+        root.style.setProperty('--syntax-func-color', 'color-mix(in srgb, var(--accent) 70%, #999 30%)');
+        root.style.setProperty('--syntax-var-color', 'color-mix(in srgb, var(--accent) 90%, transparent)');
+        root.style.setProperty('--syntax-punctuation-color', 'white');
+        root.style.setProperty('--syntax-value-color', 'color-mix(in srgb, var(--accent), white)');
+        root.style.setProperty('--syntax-comment-color', 'rgba(255, 255, 255, 0.3)');
+        root.style.setProperty('--syntax-code-border-color', 'rgba(255, 255, 255, 0.1)');
+        root.style.setProperty('--syntax-code-copy-button-color', '#bbb');
+        
+      } else if (theme === 'paper') {
+        // Light theme
+        root.style.setProperty('--background', 'color-mix(in srgb, var(--accent) 2%, #fefcfa 98%)');
+        root.style.setProperty('--color', 'black');
+        root.style.setProperty('--border-color', 'rgba(0, 0, 0, 0.1)');
+        root.style.setProperty('--accent-contrast-color', 'white');
+        root.style.setProperty('--menu-color', 'black');
+        
+        // Light theme syntax colors
+        root.style.setProperty('--syntax-func-color', 'color-mix(in srgb, var(--accent) 70%, #000 30%)');
+        root.style.setProperty('--syntax-var-color', 'color-mix(in srgb, var(--accent) 90%, #000)');
+        root.style.setProperty('--syntax-punctuation-color', 'black');
+        root.style.setProperty('--syntax-value-color', 'color-mix(in srgb, var(--accent), black)');
+        root.style.setProperty('--syntax-comment-color', 'rgba(0, 0, 0, 0.3)');
+        root.style.setProperty('--syntax-code-border-color', 'rgba(0, 0, 0, 0.1)');
+        root.style.setProperty('--syntax-code-copy-button-color', '#444');
+        
       } else {
-        // Calculate background based on accent for other themes
-        const isLightTheme = theme === 'paper';
-        if (isLightTheme) {
-          root.style.setProperty('--background', 'color-mix(in srgb, var(--accent) 2%, #fefcfa 98%)');
-          root.style.setProperty('--color', 'black');
-          root.style.setProperty('--border-color', 'rgba(0, 0, 0, 0.1)');
-          root.style.setProperty('--accent-contrast-color', 'white');
-        } else {
-          root.style.setProperty('--background', 'color-mix(in srgb, var(--accent) 2%, #1d1e28 98%)');
-          root.style.setProperty('--color', 'white');
-          root.style.setProperty('--border-color', 'rgba(255, 255, 255, 0.1)');
-          root.style.setProperty('--accent-contrast-color', 'black');
-        }
+        // Dark themes with colored accents
+        root.style.setProperty('--background', 'color-mix(in srgb, var(--accent) 2%, #1d1e28 98%)');
+        root.style.setProperty('--color', 'white');
+        root.style.setProperty('--border-color', 'rgba(255, 255, 255, 0.1)');
+        root.style.setProperty('--accent-contrast-color', 'black');
+        root.style.setProperty('--menu-color', 'white');
+        
+        // Dark theme syntax colors
+        root.style.setProperty('--syntax-func-color', 'color-mix(in srgb, var(--accent) 70%, #999 30%)');
+        root.style.setProperty('--syntax-var-color', 'color-mix(in srgb, var(--accent) 90%, transparent)');
+        root.style.setProperty('--syntax-punctuation-color', 'white');
+        root.style.setProperty('--syntax-value-color', 'color-mix(in srgb, var(--accent), white)');
+        root.style.setProperty('--syntax-comment-color', 'rgba(255, 255, 255, 0.3)');
+        root.style.setProperty('--syntax-code-border-color', 'rgba(255, 255, 255, 0.1)');
+        root.style.setProperty('--syntax-code-copy-button-color', '#bbb');
       }
       
       // Update theme title in button
