@@ -136,6 +136,23 @@
         root.style.setProperty('--syntax-code-border-color', 'rgba(0, 0, 0, 0.1)');
         root.style.setProperty('--syntax-code-copy-button-color', '#444');
         
+      } else if (theme === 'green') {
+        // Green theme - light accent, so use dark background with light text
+        root.style.setProperty('--background', 'color-mix(in srgb, var(--accent) 2%, #1d1e28 98%)');
+        root.style.setProperty('--color', 'white');
+        root.style.setProperty('--border-color', 'rgba(255, 255, 255, 0.1)');
+        root.style.setProperty('--accent-contrast-color', 'black');
+        root.style.setProperty('--menu-color', 'white');
+        
+        // Dark theme syntax colors for green
+        root.style.setProperty('--syntax-func-color', 'color-mix(in srgb, var(--accent) 70%, #999 30%)');
+        root.style.setProperty('--syntax-var-color', 'color-mix(in srgb, var(--accent) 90%, transparent)');
+        root.style.setProperty('--syntax-punctuation-color', 'white');
+        root.style.setProperty('--syntax-value-color', 'color-mix(in srgb, var(--accent), white)');
+        root.style.setProperty('--syntax-comment-color', 'rgba(255, 255, 255, 0.3)');
+        root.style.setProperty('--syntax-code-border-color', 'rgba(255, 255, 255, 0.1)');
+        root.style.setProperty('--syntax-code-copy-button-color', '#bbb');
+        
       } else {
         // Dark themes with colored accents
         root.style.setProperty('--background', 'color-mix(in srgb, var(--accent) 2%, #1d1e28 98%)');
