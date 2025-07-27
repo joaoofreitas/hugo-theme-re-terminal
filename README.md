@@ -45,6 +45,7 @@ re-Terminal before v2.1.0 may work with versions of HUGO less than v0.128.0 belo
 - [How to configure](#how-to-configure)
 - [Post archetype](#post-archetype)
 - [Add-ons](#add-ons)
+- [Adding New Color Themes](#adding-new-color-themes)
 - [How to edit the theme](#how-to-edit)
 - [Found a bug?](#bug)
 - [New cool idea or feature](#feature)
@@ -387,6 +388,69 @@ Sounds OK? Cool, let's rock! 🤘
 ## re-Terminal theme user?
 
 I'd be happy to know more about you and what you are doing. If you want to share it, please make a contribution and [add your site to the list](https://github.com/mirus-ua/hugo-theme-re-terminal/blob/main/USERS.md)! 🤗
+
+## Adding New Color Themes
+
+This fork includes enhanced theme support and logo generation. To add a new color theme:
+
+### 1. Create SCSS Color File
+
+Create a new file `assets/css/color/yourtheme.scss`:
+
+```scss
+html:root {
+  --accent: #your-accent-color;
+  /* Optional: override background for light themes */
+  --background: #your-background-color;
+}
+```
+
+### 2. Update Theme Switcher JavaScript
+
+Edit `assets/js/theme-switcher.js` and add your theme to the `themeColors` object:
+
+```javascript
+const themeColors = {
+  // ...existing themes...
+  'yourtheme': { accent: '#your-accent-color', background: '#your-background-color' }
+};
+```
+
+### 3. Update Hugo Configuration
+
+Add your theme to the `themeList` in your `hugo.toml`:
+
+```toml
+[params]
+  themeList = ['darkpaper', 'paper', 'green', 'yourtheme']
+```
+
+### 4. Generate Logo Assets (Optional)
+
+If you're using the enhanced logo generation script (see [bitstream fork](https://github.com/joaoofreitas/bitstream)), update the `THEME_CONFIGS` in `generate_logo.py`:
+
+```python
+THEME_CONFIGS = {
+    # ...existing themes...
+    'yourtheme': {
+        'accent': '#your-accent-color',
+        'background': '#your-background-color'
+    }
+}
+```
+
+Then regenerate logo assets:
+```bash
+python generate_logo.py --theme yourtheme
+```
+
+### 5. Test Your Theme
+
+1. Build your site: `hugo server -D`
+2. Use the theme switcher (usually in the header) to test your new theme
+3. Verify colors work properly across all components
+
+---
 
 ## License
 
