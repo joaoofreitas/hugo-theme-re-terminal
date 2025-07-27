@@ -68,15 +68,21 @@ a {
 img {
   display: block;
   max-width: 100%;
-  margin: 2rem auto; // Center by default and add vertical spacing
-  border: 1px solid var(--accent);
-  border-radius: 0; // Keep it sharp and terminal-like
-  background: var(--background);
-  padding: 8px; // Consistent padding for all images
+  margin: 2rem auto;
+  border: 20px solid var(--accent); // Match cover image style
+  border-radius: 0;
+  background: transparent; // Match cover image style
+  padding: 20px; // Match cover image style
   
-  // Simple, clean terminal frame
+  // Clean terminal frame like cover images
   box-shadow: none;
   position: relative;
+  
+  // Mobile responsiveness like cover images
+  @media (max-width: 684px) {
+    padding: 10px;
+    border-width: 10px;
+  }
   
   // Responsive behavior
   @media (max-width: $phone) {
