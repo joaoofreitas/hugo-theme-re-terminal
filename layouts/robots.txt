@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: {{ .Site.BaseURL }}/sitemap.xml
+
+# Block access to admin areas (if any)
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /themes/
+
+# Allow access to CSS, JS, and images
+Allow: /css/
+Allow: /js/
+Allow: /img/
+Allow: /images/
+Allow: /static/

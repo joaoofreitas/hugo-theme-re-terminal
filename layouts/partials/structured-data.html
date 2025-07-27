@@ -1,0 +1,58 @@
+{{ if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ $.Site.Title }}",
+  "url": "{{ $.Site.BaseURL }}",
+  "description": "{{ $.Site.Params.description }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ $.Site.Params.author }}",
+    "url": "{{ with $.Site.Params.social.github }}https://github.com/{{ . }}{{ end }}"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ $.Site.BaseURL }}/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{{ else if .IsPage }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{{ if eq .Type "posts" }}BlogPosting{{ else }}Article{{ end }}",
+  "headline": "{{ .Title }}",
+  "description": "{{ if .Description }}{{ .Description | plainify }}{{ else }}{{ .Summary | plainify }}{{ end }}",
+  "url": "{{ .Permalink }}",
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ with .Params.Author }}{{ . }}{{ else }}{{ $.Site.Params.author }}{{ end }}",
+    "url": "{{ with .Params.author_url }}{{ . }}{{ else }}{{ with $.Site.Params.social.github }}https://github.com/{{ . }}{{ end }}{{ end }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ $.Site.Title }}",
+    "url": "{{ $.Site.BaseURL }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ .Permalink }}"
+  },
+  {{ if .Params.tags }}
+  "keywords": "{{ delimit .Params.tags ", " }}",
+  {{ end }}
+  "wordCount": {{ .WordCount }},
+  "readingTime": "PT{{ .ReadingTime }}M"
+  {{ if .Params.cover }}
+  ,"image": {
+    "@type": "ImageObject",
+    "url": "{{ .Params.cover | absURL }}"
+  }
+  {{ end }}
+}
+</script>
+{{ end }}

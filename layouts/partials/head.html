@@ -1,15 +1,24 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="{{ if .IsHome }}{{ $.Site.Params.Subtitle }}{{ else if .Description}}{{ .Description | plainify }}{{ else }}{{ .Summary | plainify }}{{ end }}" />
-<meta name="keywords" content="{{ with .Params.Keywords }}{{ delimit . ", " }}{{ else }}{{ $.Site.Params.Keywords }}{{ end }}" />
+<meta name="description" content="{{ if .IsHome }}{{ $.Site.Params.description }}{{ else if .Description}}{{ .Description | plainify }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}" />
+<meta name="keywords" content="{{ with .Params.Keywords }}{{ delimit . ", " }}{{ else }}{{ delimit $.Site.Params.Keywords ", " }}{{ end }}" />
+<meta name="author" content="{{ with .Params.Author }}{{ . }}{{ else }}{{ $.Site.Params.author }}{{ end }}" />
 {{ if .Params.noindex }}
   {{ if or (eq (.Param "noindex") true) (eq (.Param "noindex") "true") }}
-    <meta name="robots" content="noindex" /> 
+    <meta name="robots" content="noindex, nofollow" /> 
   {{ end }}
 {{ else }}
-  <meta name="robots" content="noodp" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 {{ end }}
 <link rel="canonical" href="{{ .Permalink }}" />
+
+<!-- SEO enhancements -->
+{{ if .IsPage }}
+<meta name="article:author" content="{{ with .Params.Author }}{{ . }}{{ else }}{{ $.Site.Params.author }}{{ end }}" />
+{{ if .Params.tags }}
+<meta name="article:tag" content="{{ delimit .Params.tags ", " }}" />
+{{ end }}
+{{ end }}
 
 {{ template "_internal/google_analytics.html" . }}
 
@@ -52,19 +61,23 @@
 {{ end }}
 
 <!-- Twitter Card -->
-<meta name="twitter:card" content="summary" />
+<meta name="twitter:card" content="{{ with $.Site.Params.twitter.card }}{{ . }}{{ else }}summary_large_image{{ end }}" />
 {{ if (isset $.Site.Params "twitter") }}
   {{ if (isset $.Site.Params.Twitter "site") }}
     <meta name="twitter:site" content="{{ $.Site.Params.Twitter.site }}" />
   {{ end }}
-    <meta name="twitter:creator" content="{{ if .IsHome }}{{ $.Site.Params.Twitter.creator }}{{ else if isset .Params "authortwitter" }}{{ .Params.authorTwitter }}{{ else }}{{ .Params.Author }}{{ end }}" />
+  {{ if (isset $.Site.Params.Twitter "creator") }}
+    <meta name="twitter:creator" content="{{ if .IsHome }}{{ $.Site.Params.Twitter.creator }}{{ else if isset .Params "authortwitter" }}{{ .Params.authorTwitter }}{{ else }}{{ $.Site.Params.Twitter.creator }}{{ end }}" />
+  {{ end }}
 {{ end }}
+<meta name="twitter:title" content="{{ if .IsHome }}{{ $.Site.Title }}{{ else }}{{ .Title }}{{ end }}" />
+<meta name="twitter:description" content="{{ if .IsHome }}{{ $.Site.Params.description }}{{ else if .Description}}{{ .Description | plainify | truncate 200 }}{{ else }}{{ .Summary | plainify | truncate 200 }}{{ end }}" />
 
 <!-- OG data -->
 <meta property="og:locale" content="{{ $.Site.Language.Lang }}" />
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
 <meta property="og:title" content="{{ if .IsHome }}{{ $.Site.Title }}{{ else }}{{ .Title }}{{ end }}">
-<meta property="og:description" content="{{ if .IsHome }}{{ $.Site.Params.Subtitle }}{{ else if .Description}}{{ .Description | plainify }}{{ else }}{{ .Summary | plainify }}{{ end }}" />
+<meta property="og:description" content="{{ if .IsHome }}{{ $.Site.Params.description }}{{ else if .Description}}{{ .Description | plainify | truncate 300 }}{{ else }}{{ .Summary | plainify | truncate 300 }}{{ end }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
 <meta property="og:site_name" content="{{ $.Site.Title }}" />
 {{ if (isset .Params "cover") }}
@@ -99,5 +112,26 @@
   <link href="{{ .RelPermalink }}" rel="alternate" type="application/json" title="{{ $.Site.Title }}" />
 {{ end }}
 
+<!-- KaTeX for LaTeX Math Rendering -->
+{{ if or .Params.math $.Site.Params.math }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false},
+      {left: '\\\\(', right: '\\\\)', display: false},
+      {left: '\\\\[', right: '\\\\]', display: true}
+    ],
+    throwOnError: false,
+    errorColor: '#cc0000',
+    trust: true,
+    strict: false
+  });"></script>
+{{ end }}
+
 <!-- Extended head section-->
 {{ partial "extended_head.html" . }}
+
+<!-- Structured Data -->
+{{ partial "structured-data.html" . }}

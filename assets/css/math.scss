@@ -1,0 +1,88 @@
+/* KaTeX Math Rendering Styles */
+
+/* Math blocks */
+.katex-display {
+    margin: 1em 0;
+    text-align: center;
+    background: var(--background-secondary);
+    border-radius: 8px;
+    padding: 1rem;
+    border-left: 4px solid var(--accent);
+    overflow-x: auto;
+    
+    /* Smooth scrolling for wide equations */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+    
+    &::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 3px;
+    }
+}
+
+/* Inline math */
+.katex {
+    font-size: 1em !important;
+    color: var(--color);
+}
+
+/* Math in code blocks should be distinguishable */
+pre .katex,
+code .katex {
+    background: none;
+    color: inherit;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .katex-display {
+    background: var(--background-secondary);
+    border-left-color: var(--accent);
+}
+
+/* Light theme adjustments */
+[data-theme="paper"] .katex-display {
+    background: #f8f9fa;
+    border-left-color: var(--accent);
+}
+
+/* Math typography improvements */
+.katex .frac-line {
+    border-bottom-color: var(--color);
+}
+
+.katex .sqrt > .root {
+    color: var(--accent);
+}
+
+/* Responsive math */
+@media (max-width: 768px) {
+    .katex-display {
+        padding: 0.75rem;
+        margin: 0.75em 0;
+        font-size: 0.9em;
+    }
+}
+
+/* Math in articles */
+.post-content .katex-display {
+    margin: 1.5em 0;
+}
+
+/* Math in list items */
+li .katex-display {
+    margin: 1em 0;
+}
+
+/* Ensure math doesn't break layout */
+.katex-html {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
