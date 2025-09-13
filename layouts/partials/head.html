@@ -132,6 +132,11 @@
   });"></script>
 {{ end }}
 
+<!-- Mermaid for Diagrams -->
+{{ if or .Params.mermaid $.Site.Params.mermaid }}
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.11.0/dist/mermaid.min.js"></script>
+{{ end }}
+
 <!-- Extended head section-->
 {{ partial "extended_head.html" . }}
 
